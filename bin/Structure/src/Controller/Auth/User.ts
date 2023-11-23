@@ -1,0 +1,89 @@
+import { Request, Response } from "express"
+import { UserLoginRequest, UserRegisterRequest } from "../../Lib/DataTypes/Requests/Auth/User"
+import { UserLoginResponse, UserRegisterResponse } from "../../Lib/DataTypes/Responses/Auth/User"
+import UserModel from "../../Model/User"
+import { UserModelType } from "../../Lib/DataTypes/Models/User"
+import passwordHash from "password-hash"
+import mongoose, { Document } from "mongoose"
+import jwt from "jsonwebtoken"
+import { InputValidator, dbError } from "../../Lib/Utils/ErrorHandler"
+import { Res } from "../../Lib/DataTypes/Common"
+
+
+const createToken = (data: Record<string, any>): string => {
+	return jwt.sign(data, process.env.JWT_SECRET ?? "")
+}
+
+const login = (req: Request<any, any, UserLoginRequest>, res: Response<Res<UserLoginResponse>>): void => {
+	const { email, password } = req.body
+
+	UserModel.findOne({ email })
+		.then((result) => {
+			if (result && result.comparePassword && result.comparePassword(password)) {
+				const response: Res<UserLoginResponse> = {
+					data: {
+						token: result.token
+					},
+					status: true,
+					message: "Success"
+				}
+				res.status(200).json(response)
+			} else {
+				res.status(500).json({
+					status: false,
+					message: "No admin found"
+				})
+			}
+		})
+		.catch((error) => {
+			dbError(error, res)
+		})
+}
+
+const register = (req: Request<any, any, UserRegisterRequest>, res: Response<Res<UserRegisterResponse>>): void => {
+	InputValidator(req.body, {
+		email: "required|email",
+		password: "required|minLength:6",
+		firstName: "required",
+		lastName: "required",
+		age: "required"
+	})
+		.then(() => {
+			const _id = new mongoose.Types.ObjectId()
+			const userData: UserModelType<Document["_id"]> = {
+				...req.body,
+				password: passwordHash.generate(req.body.password, { saltLength: 10 }),
+				token: createToken({ _id, email: req.body.email }),
+				_id
+			}
+			const userModel = new UserModel(userData)
+
+			userModel.save()
+				.then(() => {
+					const response: Res<UserRegisterResponse> = {
+						data: {
+							token: userData.token
+						},
+						status: true,
+						message: "Success"
+					}
+					res.status(200).json(response)
+				})
+				.catch((error) => {
+					dbError(error, res)
+				})
+		})
+		.catch((error) => {
+			res.status(422).json({
+				status: false,
+				message: error
+			})
+		})
+}
+
+const UserAuthController = {
+	login,
+	register
+}
+
+export default UserAuthController
