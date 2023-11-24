@@ -47,13 +47,25 @@ const argv = minimist(process.argv.slice(2));
 
 const projectName = argv._[0];
 const portInput = argv.port;
+const MongoUrlInput = argv.db;
+const JDTinput = argv.jwt
 
 if (!projectName) {
     console.error('Usage: npx node-typescript-generator <project-name>');
     process.exit(1);
 }
 
-
+function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
 
 execSync(`mkdir ${projectName}`, { stdio: 'inherit' });
 
@@ -66,15 +78,18 @@ process.chdir(projectDir);
 
 execSync(`npm init`, { stdio: 'inherit' });
 
-// let packageJsonFile = `${projectDir}/package.json`
-// addLineToAFile(
-//     packageJsonFile,
-//     '"name": "typescripttest"',
-//     `"name": "${projectName.toLowerCase()}"`
-// )
-
-if(portInput){
-    let envFile = `${projectDir}/.env`
+let packageJsonFile = `${projectDir}/package.json`
+addLineToAFile(
+    packageJsonFile,
+    '"test": "echo \"Error: no test specified\" && exit 1"',
+    `
+    "start": "eslint . --ext .ts  --fix && nodemon",
+    "dev": "nodemon",
+    "lint": "eslint . --ext .ts --fix"
+    `,
+)
+let envFile = `${projectDir}/.env`
+if (portInput) {
     addLineToAFile(
         envFile,
         'PORT=8000',
@@ -82,6 +97,27 @@ if(portInput){
     )
 }
 
+if (MongoUrlInput) {
+    addLineToAFile(
+        envFile,
+        'MONGODB_URI=** your mongodb url**',
+        `MONGODB_URI=${MongoUrlInput}`
+    )
+}
+
+if (JDTinput) {
+    addLineToAFile(
+        envFile,
+        'JWT_SECRET=** your jwt secret **',
+        `MONGODB_URI=${JDTinput}`
+    )
+} else {
+    addLineToAFile(
+        envFile,
+        'JWT_SECRET=** your jwt secret **',
+        `MONGODB_URI=${makeid(12)}`
+    )
+}
 
 execSync(`npm i ${allPackages.join(' ')}`, { stdio: 'inherit' });
 execSync(`npm i -D ${devDependencies.join(' ')}`, { stdio: 'inherit' });

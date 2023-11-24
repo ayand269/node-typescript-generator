@@ -16,3 +16,5 @@ npx node-typescript-generator <ProjectName>
 | Flag | Input | Description |
 | ---- | ----- | ----------- |
 | --port | [string] | Give the port in which you want to run your project |
+| --db | [string] | Give the MongoDB URL to which you want to connect the database on your project |
+| --jwt | [string] | Could you give the JWT_SECRET to which you want to use middleware on your project?. If you are not set then we can create random. |
