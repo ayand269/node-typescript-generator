@@ -13,7 +13,7 @@ npx node-typescript-generator <ProjectName>
 
 ## ⚙️ Options
 
-| &nbsp;&nbsp; Flag&nbsp; | Input | Description |
+| &nbsp;Flag&nbsp; | Input | Description |
 | ---- | ----- | ----------- |
 | --port | [string] | Give the port in which you want to run your project |
 | --db | [string] | Give the MongoDB URL to which you want to connect the database on your project |
