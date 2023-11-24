@@ -1,13 +1,22 @@
 {
   "name": "node-typescript-generator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This is a Node JS project generator with Express and all necessary libraries in Typescript.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ayand269/node-typescript-generator.git"
   },
   "keywords": [
-    "node-typescript-generator"
+    "node-typescript-generator",
+    "node-generator",
+    "node",
+    "node-typescript",
+    "typescript",
+    "express typescript generator",
+    "node generator",
+    "express",
+    "express generator typescript",
+    "express generator"
   ],
   "author": "Ayan Das <ayand269@gmail.com> (https://github.com/ayand269)",
   "bin": {
@@ -24,7 +33,6 @@
   },
   "scripts": {
     "postgit": "git push",
-    "git": "git add . && git commit -m ",
-    "publish": "npm publish"
+    "git": "git add . && git commit -m "
   }
 }
