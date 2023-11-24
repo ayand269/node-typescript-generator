@@ -81,13 +81,14 @@ execSync(`npm init`, { stdio: 'inherit' });
 let packageJsonFile = `${projectDir}/package.json`
 addLineToAFile(
     packageJsonFile,
-    '"test": "echo \"Error: no test specified\" && exit 1"',
-    `
+    `" && exit 1"`,
+    `" && exit 1",
     "start": "eslint . --ext .ts  --fix && nodemon",
     "dev": "nodemon",
     "lint": "eslint . --ext .ts --fix"
     `,
 )
+
 let envFile = `${projectDir}/.env`
 if (portInput) {
     addLineToAFile(
@@ -115,7 +116,7 @@ if (JDTinput) {
     addLineToAFile(
         envFile,
         'JWT_SECRET=** your jwt secret **',
-        `MONGODB_URI=${makeid(12)}`
+        `JWT_SECRET=${makeid(30)}`
     )
 }
 
