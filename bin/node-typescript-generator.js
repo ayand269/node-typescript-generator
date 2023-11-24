@@ -64,12 +64,14 @@ fs.copySync(templateDir, projectDir);
 
 process.chdir(projectDir);
 
-let packageJsonFile = `${projectDir}/package.json`
-addLineToAFile(
-    packageJsonFile,
-    '"name": "typescripttest"',
-    `"name": "${projectName.toLowerCase()}"`
-)
+execSync(`npm init`, { stdio: 'inherit' });
+
+// let packageJsonFile = `${projectDir}/package.json`
+// addLineToAFile(
+//     packageJsonFile,
+//     '"name": "typescripttest"',
+//     `"name": "${projectName.toLowerCase()}"`
+// )
 
 if(portInput){
     let envFile = `${projectDir}/.env`
