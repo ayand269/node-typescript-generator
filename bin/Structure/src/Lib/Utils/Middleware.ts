@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { Res } from "../DataTypes/Common"
+import { ResponseCode } from "./ResponseCode"
 
 export const middleware = (req: Request, res: Response<Res>, next: NextFunction): void => {
 	const authorization: string | undefined = req.headers.authorization
 
 	if (!authorization) {
-		res.status(322).json({
+		res.status(ResponseCode.AUTH_ERROR).json({
 			status: false,
 			message: "No credentials sent!"
 		})
@@ -20,7 +21,7 @@ export const middleware = (req: Request, res: Response<Res>, next: NextFunction)
 
 			next()
 		} catch (error) {
-			res.status(322).json({
+			res.status(ResponseCode.AUTH_ERROR).json({
 				status: false,
 				message: "Auth error!"
 			})
