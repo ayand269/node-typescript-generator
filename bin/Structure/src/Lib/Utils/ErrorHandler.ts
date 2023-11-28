@@ -2,6 +2,7 @@ import { Response } from "express"
 import mongoose from "mongoose"
 import { Validator } from "node-input-validator"
 import { Res } from "../DataTypes/Common"
+import { ResponseCode } from "./ResponseCode"
 
 export const dbError = (error: any, res: Response<Res<any>>): void => {
 	switch (true) {
@@ -11,7 +12,7 @@ export const dbError = (error: any, res: Response<Res<any>>): void => {
 
 			const duplicateField = matches && matches[1] ? matches[1] : "unknown"
 
-			res.status(409).json({
+			res.status(ResponseCode.DUPLICATE_KEY_ERROR).json({
 				status: false,
 				message: `Duplicate key error on field: ${duplicateField}`,
 				error: error
@@ -28,7 +29,7 @@ export const dbError = (error: any, res: Response<Res<any>>): void => {
 				}
 			}
 
-			res.status(422).json({
+			res.status(ResponseCode.VALIDATION_ERROR).json({
 				status: false,
 				error: errors,
 				message: errors[0]
@@ -37,7 +38,7 @@ export const dbError = (error: any, res: Response<Res<any>>): void => {
 		}
 
 		case error instanceof mongoose.Error.CastError: {
-			res.status(400).json({
+			res.status(ResponseCode.BAD_REQUEST).json({
 				status: false,
 				message: `Invalid ${error.kind}: ${error.value}`,
 				error: error
@@ -46,7 +47,7 @@ export const dbError = (error: any, res: Response<Res<any>>): void => {
 		}
 
 		default: {
-			res.status(500).json({
+			res.status(ResponseCode.SERVER_ERROR).json({
 				status: false,
 				message: "Internal Server Error",
 				error: error

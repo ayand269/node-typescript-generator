@@ -8,6 +8,7 @@ import mongoose, { Document } from "mongoose"
 import jwt from "jsonwebtoken"
 import { InputValidator, dbError } from "../../Lib/Utils/ErrorHandler"
 import { Res } from "../../Lib/DataTypes/Common"
+import { ResponseCode } from "../../Lib/Utils/ResponseCode"
 
 
 const createToken = (data: Record<string, any>): string => {
@@ -27,9 +28,9 @@ const login = (req: Request<any, any, UserLoginRequest>, res: Response<Res<UserL
 					status: true,
 					message: "Success"
 				}
-				res.status(200).json(response)
+				res.status(ResponseCode.SUCCESS).json(response)
 			} else {
-				res.status(500).json({
+				res.status(ResponseCode.NOT_FOUND_ERROR).json({
 					status: false,
 					message: "No admin found"
 				})
@@ -67,14 +68,14 @@ const register = (req: Request<any, any, UserRegisterRequest>, res: Response<Res
 						status: true,
 						message: "Success"
 					}
-					res.status(200).json(response)
+					res.status(ResponseCode.SUCCESS).json(response)
 				})
 				.catch((error) => {
 					dbError(error, res)
 				})
 		})
 		.catch((error) => {
-			res.status(422).json({
+			res.status(ResponseCode.VALIDATION_ERROR).json({
 				status: false,
 				message: error
 			})

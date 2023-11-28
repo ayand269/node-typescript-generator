@@ -4,6 +4,7 @@ import { Res } from "../../Lib/DataTypes/Common"
 import { UserProfileType } from "../../Lib/DataTypes/Responses/User"
 import { dbError } from "../../Lib/Utils/ErrorHandler"
 import mongoose from "mongoose"
+import { ResponseCode } from "../../Lib/Utils/ResponseCode"
 
 const getUserProfile = (req: Request, res: Response<Res<UserProfileType>>): void => {
 	UserModel.aggregate([
@@ -24,7 +25,7 @@ const getUserProfile = (req: Request, res: Response<Res<UserProfileType>>): void
 		}
 	])
 		.then((result: Array<UserProfileType>) => {
-			res.status(200).json({
+			res.status(ResponseCode.SUCCESS).json({
 				status: true,
 				data: result[0],
 				message: "Successfully Get UserProfile"
