@@ -110,7 +110,7 @@ if (JDTinput) {
     addLineToAFile(
         envFile,
         'JWT_SECRET=** your jwt secret **',
-        `MONGODB_URI=${JDTinput}`
+        `JWT_SECRET=${JDTinput}`
     )
 } else {
     addLineToAFile(

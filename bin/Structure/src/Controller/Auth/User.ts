@@ -51,7 +51,7 @@ const register = (req: Request<any, any, UserRegisterRequest>, res: Response<Res
 	})
 		.then(() => {
 			const _id = new mongoose.Types.ObjectId()
-			const userData: UserModelType<Document["_id"]> = {
+			const userData: UserModelType<{ _id: mongoose.Types.ObjectId }> = {
 				...req.body,
 				password: passwordHash.generate(req.body.password, { saltLength: 10 }),
 				token: createToken({ _id, email: req.body.email }),
