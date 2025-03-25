@@ -1,6 +1,6 @@
 {
   "name": "node-typescript-generator",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "This is a Node JS project generator with Express and all necessary libraries in Typescript.",
   "repository": {
     "type": "git",
