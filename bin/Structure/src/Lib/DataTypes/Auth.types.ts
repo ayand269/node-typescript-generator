@@ -13,7 +13,7 @@ export type UserRegisterRequest = {
 }
 
 export type UserLoginResponse = {
-    token: string
+    token?: string
 }
 
 export type UserRegisterResponse = UserLoginResponse

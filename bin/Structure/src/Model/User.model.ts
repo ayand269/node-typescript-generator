@@ -5,8 +5,10 @@ export type UserModelType<T = Record<string, any>> = T & {
     firstName: string;
     lastName: string;
     email: string;
+    password?: string;
     image?: string;
     token?: string;
+    comparePassword?: (candidatePassword: string) => boolean;
     createdAt?: Date;
     updatedAt?: Date;
 };
