@@ -1,14 +1,12 @@
 import { Request, Response } from "express"
-import { UserLoginRequest, UserRegisterRequest } from "../../Lib/DataTypes/Requests/Auth/User"
-import { UserLoginResponse, UserRegisterResponse } from "../../Lib/DataTypes/Responses/Auth/User"
-import UserModel from "../../Model/User"
-import { UserModelType } from "../../Lib/DataTypes/Models/User"
+import UserModel, { UserModelType } from "../../Model/User.model"
 import passwordHash from "password-hash"
 import mongoose, { Document } from "mongoose"
 import jwt from "jsonwebtoken"
 import { InputValidator, dbError } from "../../Lib/Utils/ErrorHandler"
-import { Res } from "../../Lib/DataTypes/Common"
+import { Res } from "../../Lib/DataTypes/Common.types"
 import { ResponseCode } from "../../Lib/Utils/ResponseCode"
+import { UserLoginRequest, UserLoginResponse, UserRegisterRequest, UserRegisterResponse } from "../../Lib/DataTypes/Auth.types"
 
 
 const createToken = (data: Record<string, any>): string => {
@@ -63,7 +61,7 @@ const register = (req: Request<any, any, UserRegisterRequest>, res: Response<Res
 				.then(() => {
 					const response: Res<UserRegisterResponse> = {
 						data: {
-							token: userData.token
+							token: userData.token ?? ''
 						},
 						status: true,
 						message: "Success"

@@ -1,7 +1,7 @@
 import { Router } from "express"
-import UserAuthController from "../Controller/Auth/User"
+import UserAuthController from "../Controller/Auth/User.controller"
 import { middleware } from "../Lib/Utils/Middleware"
-import UserRouter from "./User"
+import UserRouter from "./User.route"
 
 const Route: Router = Router()
 

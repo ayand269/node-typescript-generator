@@ -1,7 +1,7 @@
 import { Response } from "express"
 import mongoose from "mongoose"
 import { Validator } from "node-input-validator"
-import { Res } from "../DataTypes/Common"
+import { Res } from "../DataTypes/Common.types"
 import { ResponseCode } from "./ResponseCode"
 
 export const dbError = (error: any, res: Response<Res<any>>): void => {

@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
-import UserModel from "../../Model/User"
-import { Res } from "../../Lib/DataTypes/Common"
-import { UserProfileType } from "../../Lib/DataTypes/Responses/User"
+import UserModel from "../../Model/User.model"
+import { Res } from "../../Lib/DataTypes/Common.types"
 import { dbError } from "../../Lib/Utils/ErrorHandler"
 import mongoose from "mongoose"
 import { ResponseCode } from "../../Lib/Utils/ResponseCode"
+import { UserProfileType } from "../../Lib/DataTypes/User.types"
 
 const getUserProfile = (req: Request, res: Response<Res<UserProfileType>>): void => {
 	UserModel.aggregate([
@@ -36,8 +36,8 @@ const getUserProfile = (req: Request, res: Response<Res<UserProfileType>>): void
 		})
 }
 
-const UserController = {
+const UserProfileController = {
 	getUserProfile
 }
 
-export default UserController
+export default UserProfileController

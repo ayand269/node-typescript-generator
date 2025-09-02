@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken"
-import { Res } from "../DataTypes/Common"
+import { Res } from "../DataTypes/Common.types"
 import { ResponseCode } from "./ResponseCode"
 
 export const middleware = (req: Request, res: Response<Res>, next: NextFunction): void => {

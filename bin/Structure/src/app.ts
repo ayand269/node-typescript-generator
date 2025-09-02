@@ -1,7 +1,7 @@
 import express, { Application } from "express"
 import { configDotenv } from "dotenv"
 import { connectDB } from "./Lib/Utils/Connection"
-import Route from "./Routes/Index"
+import Route from "./Routes"
 import logger from "morgan"
 
 configDotenv()

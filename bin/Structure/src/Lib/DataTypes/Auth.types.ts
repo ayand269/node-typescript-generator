@@ -11,3 +11,9 @@ export type UserRegisterRequest = {
     image?: string
     age: number
 }
+
+export type UserLoginResponse = {
+    token: string
+}
+
+export type UserRegisterResponse = UserLoginResponse
